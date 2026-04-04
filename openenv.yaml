@@ -1,0 +1,9 @@
+name: smart-task-env
+description: Task prioritization RL environment
+version: 1.0
+
+entrypoint: env.py
+
+models:
+  observation: TaskObservation
+  action: Action
