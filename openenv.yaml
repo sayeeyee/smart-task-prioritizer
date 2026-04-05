@@ -1,9 +1,10 @@
-name: smart-task-env
-description: Task prioritization RL environment
-version: 1.0
+name: smart-task-prioritizer
+description: Task prioritization environment
 
-entrypoint: env.py
+entrypoint: inference.py
+
+tasks:
+  - name: task-prioritization
 
 models:
-  observation: TaskObservation
-  action: Action
+  - name: rule-based
