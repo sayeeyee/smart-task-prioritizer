@@ -1,10 +1,4 @@
-name: smart-task-prioritizer
-description: Task prioritization environment
+
 
 entrypoint: inference:app
 
-tasks:
-  - name: task-prioritization
-
-models:
-  - name: rule-based

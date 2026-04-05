@@ -6,8 +6,8 @@ app = FastAPI()
 
 env = TaskEnv()
 
-class Action(BaseModel):
-    priority: str
+class StepRequest(BaseModel):
+    action: int
 
 
 @app.post("/reset")
@@ -16,5 +16,5 @@ def reset():
 
 
 @app.post("/step")
-def step(action: Action):
-    return env.step({"priority": action.priority})
+def step(req: StepRequest):
+    return env.step(req.action)
