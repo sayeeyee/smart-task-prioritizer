@@ -1,8 +1,18 @@
-print("[START] task=task-prioritization env=custom-env model=rule-based")
+from fastapi import FastAPI
+from pydantic import BaseModel
+from env import TaskEnv
 
-reward = 0.8
-steps = 1
+app = FastAPI()
 
-print(f"[STEP] step={steps} action=assign_priority reward={reward:.2f} done=true error=null")
+env = TaskEnv()
 
-print(f"[END] success=true steps={steps} score={reward:.2f} rewards=[{reward}]")
+class ActionInput(BaseModel):
+    priority: str
+
+@app.post("/reset")
+def reset():
+    return env.reset()
+
+@app.post("/step")
+def step(action: ActionInput):
+    return env.step({"priority": action.priority})

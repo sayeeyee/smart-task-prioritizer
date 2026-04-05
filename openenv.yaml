@@ -1,7 +1,7 @@
 name: smart-task-prioritizer
 description: Task prioritization environment
 
-entrypoint: inference.py
+entrypoint: inference:app
 
 tasks:
   - name: task-prioritization
