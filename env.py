@@ -1,5 +1,4 @@
 import random
-from models import TaskObservation, Action, StepResult
 
 class TaskEnv:
     def __init__(self):
@@ -12,12 +11,16 @@ class TaskEnv:
 
     def reset(self):
         task = random.choice(self.tasks)
-        self.current_task = TaskObservation(
-            description=task["desc"],
-            deadline=task["deadline"],
-            importance=task["importance"]
-        )
-        return self.current_task
+
+        self.current_task = {
+            "description": task["desc"],
+            "deadline": task["deadline"],
+            "importance": task["importance"]
+        }
+
+        return {
+            "state": self.current_task
+        }
 
     def get_correct_priority(self, task):
         if task["deadline"] <= 2 or task["importance"] == 3:
@@ -27,26 +30,23 @@ class TaskEnv:
         else:
             return "low"
 
-    def step(self, action: Action):
-        task_dict = {
-            "desc": self.current_task.description,
-            "deadline": self.current_task.deadline,
-            "importance": self.current_task.importance
-        }
+    def step(self, action):
+        task = self.current_task
 
-        correct = self.get_correct_priority(task_dict)
+        correct_priority = self.get_correct_priority({
+            "deadline": task["deadline"],
+            "importance": task["importance"]
+        })
 
-        if action.priority == correct:
+        # reward logic
+        if action == correct_priority:
             reward = 1.0
-        elif action.priority == "medium":
-            reward = 0.5
         else:
-            reward = -1.0
+            reward = 0.5
 
-        reward -= 0.1  # step penalty
-
-        return StepResult(
-            reward=reward,
-            done=True,
-            correct=correct
-        )
+        return {
+            "state": task,
+            "reward": reward,
+            "done": True,
+            "info": {}
+        }
