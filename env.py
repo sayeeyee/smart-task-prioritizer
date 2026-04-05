@@ -13,13 +13,17 @@ class TaskEnv:
         task = random.choice(self.tasks)
 
         self.current_task = {
-            "description": task["desc"],
+            "desc": task["desc"],
             "deadline": task["deadline"],
             "importance": task["importance"]
         }
 
         return {
-            "state": self.current_task
+            "state": {
+                "desc": self.current_task["desc"],
+                "deadline": self.current_task["deadline"],
+                "importance": self.current_task["importance"]
+            }
         }
 
     def get_correct_priority(self, task):
@@ -33,20 +37,20 @@ class TaskEnv:
     def step(self, action):
         task = self.current_task
 
-        correct_priority = self.get_correct_priority({
-            "deadline": task["deadline"],
-            "importance": task["importance"]
-        })
+        correct_priority = self.get_correct_priority(task)
 
-        # reward logic
         if action == correct_priority:
             reward = 1.0
         else:
             reward = 0.5
 
         return {
-            "state": task,
-            "reward": reward,
+            "state": {
+                "desc": task["desc"],
+                "deadline": task["deadline"],
+                "importance": task["importance"]
+            },
+            "reward": float(reward),
             "done": True,
             "info": {}
         }
