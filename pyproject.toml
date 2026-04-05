@@ -1,0 +1,9 @@
+[project]
+name = "smart-task-prioritizer"
+version = "0.1.0"
+description = "Smart Task Prioritizer OpenEnv Project"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic"
+]
