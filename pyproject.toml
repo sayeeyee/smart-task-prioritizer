@@ -11,6 +11,9 @@ dependencies = [
     "pydantic"
 ]
 
+[tool.setuptools]
+py-modules = ["env", "inference"]
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
