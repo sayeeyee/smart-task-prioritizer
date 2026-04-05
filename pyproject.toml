@@ -2,8 +2,15 @@
 name = "smart-task-prioritizer"
 version = "0.1.0"
 description = "Smart Task Prioritizer OpenEnv Project"
+readme = "README.md"
+requires-python = ">=3.8"
+
 dependencies = [
     "fastapi",
     "uvicorn",
     "pydantic"
 ]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
