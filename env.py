@@ -23,7 +23,8 @@ class TaskEnv:
                 "desc": self.current_task["desc"],
                 "deadline": self.current_task["deadline"],
                 "importance": self.current_task["importance"]
-            }
+            },
+            "info": {}
         }
 
     def get_correct_priority(self, task):
