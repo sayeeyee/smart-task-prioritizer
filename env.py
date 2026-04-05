@@ -3,35 +3,42 @@ import random
 class TaskEnv:
     def __init__(self):
         self.tasks = [
-            {"desc": "Complete assignment", "deadline": 1, "importance": 3},
-            {"desc": "Watch lecture", "deadline": 3, "importance": 2},
-            {"desc": "Go for walk", "deadline": 5, "importance": 1}
+            {"desc": "Submit assignment", "deadline": 1, "importance": 3},
+            {"desc": "Watch lecture", "deadline": 4, "importance": 2},
+            {"desc": "Clean room", "deadline": 8, "importance": 1}
         ]
         self.current_task = None
 
     def reset(self):
         self.current_task = random.choice(self.tasks)
+
         return {
             "state": {
                 "description": self.current_task["desc"],
                 "deadline": self.current_task["deadline"],
                 "importance": self.current_task["importance"]
-            }
+            },
+            "info": {}
         }
 
     def step(self, action):
         task = self.current_task
         priority = action.get("priority")
 
-        # Simple reward logic
-        if task["importance"] >= 3 and priority == "high":
-            reward = 1
-        elif task["importance"] == 2 and priority in ["medium", "high"]:
-            reward = 0.5
-        elif task["importance"] == 1 and priority == "low":
-            reward = 1
+        # correct priority logic
+        if task["deadline"] <= 2 or task["importance"] == 3:
+            correct = "high"
+        elif task["deadline"] <= 5:
+            correct = "medium"
         else:
-            reward = 0
+            correct = "low"
+
+        if priority == correct:
+            reward = 1.0
+        elif priority == "medium" and correct in ["low", "high"]:
+            reward = 0.5
+        else:
+            reward = -1.0
 
         return {
             "state": {
