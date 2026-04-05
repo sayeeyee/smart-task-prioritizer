@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-py-modules = ["env", "inference"]
+packages = ["smart_env"]
 
 [build-system]
 requires = ["setuptools"]
